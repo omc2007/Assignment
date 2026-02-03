@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Assignment.Views.SignInPage"
+    Title="Sign In">
+
+    <VerticalStackLayout
+        Padding="30"
+        Spacing="15"
+        VerticalOptions="Center">
+
+        <!-- Title -->
+        <Label
+            Text="KASATA"
+            FontSize="32"
+            HorizontalOptions="Center"
+            FontAttributes="Bold" />
+
+        <!-- Email -->
+        <Entry
+            Placeholder="Email"
+            Text="{Binding Email}" />
+
+        <!-- Password -->
+        <Grid ColumnDefinitions="*,Auto">
+
+            <Entry
+                Grid.Column="0"
+                Placeholder="Password"
+                IsPassword="{Binding IsPassword}"
+                Text="{Binding Password}" />
+
+            <Button
+                Grid.Column="1"
+                Text="👁"
+                Command="{Binding TogglePasswordCommand}" />
+        </Grid>
+
+        <!-- Sign In -->
+        <Button
+            Text="Sign In"
+            Command="{Binding SignInCommand}"
+            IsEnabled="{Binding CanSignIn}" />
+        <Label
+    Text="Don't have an account? Sign Up"
+    TextColor="Blue"
+    FontSize="14"
+    TextDecorations="Underline"
+    HorizontalOptions="Center">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding GoToSignUpCommand}" />
+            </Label.GestureRecognizers>
+        </Label>
+
+
+        <!-- Error -->
+        <Label
+            Text="{Binding ErrorMessage}"
+            TextColor="Red"
+            HorizontalOptions="Center"/>
+
+    </VerticalStackLayout>
+
+</ContentPage>

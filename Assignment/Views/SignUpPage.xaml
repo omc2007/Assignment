@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Assignment.Views.SignUpPage"
+    Title="Sign Up">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30"
+            Spacing="12">
+
+            <Label
+                Text="Create Account"
+                FontSize="28"
+                HorizontalOptions="Center"
+                FontAttributes="Bold" />
+
+            <Entry Placeholder="First Name"
+                   Text="{Binding FirstName}" />
+
+            <Entry Placeholder="Last Name"
+                   Text="{Binding LastName}" />
+
+            <Entry Placeholder="Email"
+                   Keyboard="Email"
+                   Text="{Binding Email}" />
+
+            <!-- Password -->
+            <Grid ColumnDefinitions="*,Auto">
+
+                <Entry
+                    Grid.Column="0"
+                    Placeholder="Password"
+                    IsPassword="{Binding IsPassword}"
+                    Text="{Binding Password}" />
+
+                <Button
+                    Grid.Column="1"
+                    Text="👁"
+                    Command="{Binding TogglePasswordCommand}" />
+            </Grid>
+
+            <Entry Placeholder="Mobile"
+                   Keyboard="Telephone"
+                   Text="{Binding Mobile}" />
+
+            <Button
+                Text="Sign Up"
+                Command="{Binding SignUpCommand}"
+                IsEnabled="{Binding CanSignUp}" />
+            <Label
+    Text="Already have an account? Sign In"
+    TextColor="Blue"
+    HorizontalOptions="Center">
+
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer
+            Command="{Binding GoToSignInCommand}" />
+                </Label.GestureRecognizers>
+
+            </Label>
+
+
+            <Label
+                Text="{Binding ErrorMessage}"
+                TextColor="Red"
+                HorizontalOptions="Center"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

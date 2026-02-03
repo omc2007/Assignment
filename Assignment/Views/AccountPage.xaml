@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Assignment.Views.AccountPage"
+    Title="Account">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Text="Delete"
+            Command="{Binding DeleteCommand}"
+            IsEnabled="{Binding CanDelete}"
+            Order="Primary"
+            Priority="0" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="12">
+
+            <Grid HorizontalOptions="Center">
+                <Frame
+                    WidthRequest="120"
+                    HeightRequest="120"
+                    CornerRadius="60"
+                    Padding="0"
+                    HasShadow="False"
+                    IsClippedToBounds="True">
+                    <Image
+                        Source="{Binding ProfileImage}"
+                        Aspect="AspectFill" />
+                </Frame>
+            </Grid>
+
+            <Entry Placeholder="First Name" Text="{Binding FirstName}" />
+            <Entry Placeholder="Last Name" Text="{Binding LastName}" />
+            <Entry Placeholder="Email" Keyboard="Email" Text="{Binding Email}" />
+            <Entry Placeholder="Mobile" Keyboard="Telephone" Text="{Binding Mobile}" />
+
+            <Button
+                Text="Update"
+                Command="{Binding UpdateCommand}"
+                IsEnabled="{Binding CanUpdate}" />
+
+            <Label
+                Text="{Binding ErrorMessage}"
+                TextColor="Red"
+                HorizontalOptions="Center" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
