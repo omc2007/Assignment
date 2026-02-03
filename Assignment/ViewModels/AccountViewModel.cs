@@ -121,7 +121,11 @@ public class AccountViewModel : INotifyPropertyChanged
         });
 
         ErrorMessage = "";
-        await Shell.Current.GoToAsync("..");
+        if (session.IsAdmin)
+            await Shell.Current.GoToAsync("//UsersListPage");
+        else
+            await Shell.Current.GoToAsync("//MainPage");
+
     }
 
     private async void Delete()

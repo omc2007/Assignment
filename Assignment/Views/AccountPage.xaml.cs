@@ -1,13 +1,12 @@
 using Assignment.ViewModels;
 
+
+
 namespace Assignment.Views;
 
-[QueryProperty(nameof(UserId), "userId")]
-public partial class AccountPage : ContentPage
+public partial class AccountPage : ContentPage, IQueryAttributable
 {
     private readonly AccountViewModel vm;
-
-    public string UserId { get; set; } = "";
 
     public AccountPage(AccountViewModel vm)
     {
@@ -16,11 +15,13 @@ public partial class AccountPage : ContentPage
         BindingContext = vm;
     }
 
-    protected override void OnAppearing()
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        base.OnAppearing();
-
-        bool isAdmin = true;
-        vm.Load(UserId);
+        if (query.TryGetValue("userId", out var val))
+        {
+            var id = val?.ToString() ?? "";
+            vm.Load(id);
+        }
     }
 }
+
