@@ -54,11 +54,13 @@ public class MainViewModel : INotifyPropertyChanged
         await Shell.Current.GoToAsync($"//AccountPage?userId={Uri.EscapeDataString(session.CurrentUserId)}");
     }
 
-    private async void SignOut()
+
+  private async void SignOut()
     {
-        session.SignOut();
+        session.SignOut();   // מנקה משתמש מחובר
         await Shell.Current.GoToAsync("//SignInPage");
     }
+    
 
     public event PropertyChangedEventHandler? PropertyChanged;
 

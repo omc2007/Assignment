@@ -3,35 +3,30 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:Assignment.Views"
-    x:Class="Assignment.AppShell">
+    x:Class="Assignment.AppShell"
+    FlyoutBehavior="Flyout">
 
-    <!-- Sign In -->
-    <ShellContent
-        Route="SignInPage"
-        ContentTemplate="{DataTemplate views:SignInPage}" />
+    <!-- תפריט קבוע לכל האפליקציה -->
+    <FlyoutItem x:Name="HomeItem" Title="Home" Route="MainPage">
+        <ShellContent ContentTemplate="{DataTemplate views:MainPage}" />
+    </FlyoutItem>
 
-    <!-- Sign Up -->
-    <ShellContent
-        Route="SignUpPage"
-        ContentTemplate="{DataTemplate views:SignUpPage}" />
+    <FlyoutItem x:Name="AccountItem" Title="Account" Route="AccountPage">
+        <ShellContent ContentTemplate="{DataTemplate views:AccountPage}" />
+    </FlyoutItem>
 
-    <!-- Main -->
-    <ShellContent
-        Route="MainPage"
-        ContentTemplate="{DataTemplate views:MainPage}" />
+    <FlyoutItem x:Name="UsersItem" Title="Users" Route="UsersListPage">
+        <ShellContent ContentTemplate="{DataTemplate views:UsersListPage}" />
+    </FlyoutItem>
 
-    <!-- Account -->
-    <ShellContent
-        Route="AccountPage"
-        ContentTemplate="{DataTemplate views:AccountPage}" />
+    <FlyoutItem x:Name="AdminItem" Title="Admin" Route="AdminPage">
+        <ShellContent ContentTemplate="{DataTemplate views:AdminPage}" />
+    </FlyoutItem>
 
-    <!-- Admin -->
-    <ShellContent
-        Route="AdminPage"
-        ContentTemplate="{DataTemplate views:AdminPage}" />
-    <ShellContent 
-        Route="UsersListPage" 
-        ContentTemplate="{DataTemplate views:UsersListPage}" />
+    <!-- SignIn/SignUp מחוץ לתפריט -->
+    <ShellContent Route="SignInPage" ContentTemplate="{DataTemplate views:SignInPage}" />
+    <ShellContent Route="SignUpPage" ContentTemplate="{DataTemplate views:SignUpPage}" />
 
 </Shell>
+
 
