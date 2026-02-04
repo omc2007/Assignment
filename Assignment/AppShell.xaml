@@ -8,13 +8,15 @@
     <!-- SignIn/SignUp מחוץ לתפריט -->
     <ShellContent Route="SignInPage" ContentTemplate="{DataTemplate views:SignInPage}" />
     <ShellContent Route="SignUpPage" ContentTemplate="{DataTemplate views:SignUpPage}" />
+
     <!-- תפריט קבוע לכל האפליקציה -->
     <FlyoutItem x:Name="HomeItem" Title="Home" Route="MainPage">
         <ShellContent ContentTemplate="{DataTemplate views:MainPage}" />
     </FlyoutItem>
 
+
     <FlyoutItem x:Name="AccountItem" Title="Account" Route="AccountPage">
-        <ShellContent ContentTemplate="{DataTemplate views:AccountPage}" />
+    <ShellContent ContentTemplate="{DataTemplate views:AccountPage}" />
     </FlyoutItem>
 
     <FlyoutItem x:Name="UsersItem" Title="Users" Route="UsersListPage">
@@ -24,6 +26,10 @@
     <FlyoutItem x:Name="AdminItem" Title="Admin" Route="AdminPage">
         <ShellContent ContentTemplate="{DataTemplate views:AdminPage}" />
     </FlyoutItem>
+
+
+
+
 
 
 

@@ -57,6 +57,7 @@ public class InMemoryUserService : IUserService
         existing.Mobile = user.Mobile;
         if (!string.IsNullOrWhiteSpace(user.Password))
             existing.Password = user.Password;
+        
     }
 
     public void Delete(string id)
