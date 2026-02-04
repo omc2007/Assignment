@@ -5,7 +5,9 @@
     xmlns:views="clr-namespace:Assignment.Views"
     x:Class="Assignment.AppShell"
     FlyoutBehavior="Flyout">
-
+    <!-- SignIn/SignUp מחוץ לתפריט -->
+    <ShellContent Route="SignInPage" ContentTemplate="{DataTemplate views:SignInPage}" />
+    <ShellContent Route="SignUpPage" ContentTemplate="{DataTemplate views:SignUpPage}" />
     <!-- תפריט קבוע לכל האפליקציה -->
     <FlyoutItem x:Name="HomeItem" Title="Home" Route="MainPage">
         <ShellContent ContentTemplate="{DataTemplate views:MainPage}" />
@@ -23,9 +25,7 @@
         <ShellContent ContentTemplate="{DataTemplate views:AdminPage}" />
     </FlyoutItem>
 
-    <!-- SignIn/SignUp מחוץ לתפריט -->
-    <ShellContent Route="SignInPage" ContentTemplate="{DataTemplate views:SignInPage}" />
-    <ShellContent Route="SignUpPage" ContentTemplate="{DataTemplate views:SignUpPage}" />
+
 
 </Shell>
 
