@@ -17,5 +17,5 @@
         <Label Text="{Binding Greeting}" FontSize="22" HorizontalOptions="Center" />
         <Label Text="Make your greatest app here!" HorizontalOptions="Center" />
     </VerticalStackLayout>
-
+    
 </ContentPage>

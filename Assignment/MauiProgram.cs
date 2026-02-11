@@ -29,7 +29,6 @@ public static class MauiProgram
         builder.Services.AddTransient<Assignment.Views.AccountPage>();
         builder.Services.AddTransient<Assignment.ViewModels.AccountViewModel>();
         builder.Services.AddSingleton<ISessionService, SessionService>();
-
         return builder.Build();
     }
 }

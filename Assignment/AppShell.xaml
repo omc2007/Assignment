@@ -27,12 +27,6 @@
         <ShellContent ContentTemplate="{DataTemplate views:AdminPage}" />
     </FlyoutItem>
 
-
-
-
-
-
-
 </Shell>
 
 

@@ -14,7 +14,7 @@
 
         <!-- Title -->
         <Label
-            Text="KASATA"
+            Text="ReCAI"
             FontSize="32"
             HorizontalOptions="Center"
             FontAttributes="Bold" />
