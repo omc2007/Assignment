@@ -7,11 +7,11 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using Assignment.Models;
-using Assignment.Services;
+using ReCAI.Models;
+using ReCAI.Services;
 
 
-namespace Assignment.ViewModels;
+namespace ReCAI.ViewModels;
 
 public class UsersListViewModel : INotifyPropertyChanged
 {

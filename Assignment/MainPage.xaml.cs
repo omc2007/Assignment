@@ -1,4 +1,4 @@
-﻿namespace Assignment
+﻿namespace ReCAI
 {
     public partial class MainPage : ContentPage
     {

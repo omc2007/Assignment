@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace Assignment
+namespace ReCAI
 {
     [Application]
     public class MainApplication : MauiApplication

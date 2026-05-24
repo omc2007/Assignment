@@ -2,7 +2,7 @@
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="Assignment.Views.SignUpPage"
+    x:Class="ReCAI.Views.SignUpPage"
     Title="Sign Up"
     Shell.FlyoutBehavior="Disabled">
 
@@ -52,7 +52,7 @@
                 IsEnabled="{Binding CanSignUp}" />
             <Label
     Text="Already have an account? Sign In"
-    TextColor="Blue"
+    TextColor="GreenYellow"
     HorizontalOptions="Center">
 
                 <Label.GestureRecognizers>

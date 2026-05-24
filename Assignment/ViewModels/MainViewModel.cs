@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using Assignment.Services;
+using ReCAI.Services;
 
-namespace Assignment.ViewModels;
+namespace ReCAI.ViewModels;
 
 public class MainViewModel : INotifyPropertyChanged
 {

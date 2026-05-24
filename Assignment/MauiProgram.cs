@@ -1,10 +1,10 @@
-﻿using Assignment.Views;
-using Assignment.ViewModels;
+﻿using ReCAI.Views;
+using ReCAI.ViewModels;
 using CommunityToolkit.Maui;
-using Assignment.Services;
-using Assignment.Views;
-using Assignment.ViewModels;
-namespace Assignment;
+using ReCAI.Services;
+using ReCAI.Views;
+using ReCAI.ViewModels;
+namespace ReCAI;
 public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
@@ -26,9 +26,10 @@ public static class MauiProgram
         builder.Services.AddSingleton<IUserService, InMemoryUserService>();
         builder.Services.AddTransient<UsersListPage>();
         builder.Services.AddTransient<UsersListViewModel>();
-        builder.Services.AddTransient<Assignment.Views.AccountPage>();
-        builder.Services.AddTransient<Assignment.ViewModels.AccountViewModel>();
+        builder.Services.AddTransient<ReCAI.Views.AccountPage>();
+        builder.Services.AddTransient<ReCAI.ViewModels.AccountViewModel>();
         builder.Services.AddSingleton<ISessionService, SessionService>();
+        builder.Services.AddSingleton<FirebaseUserService>();
         return builder.Build();
     }
 }

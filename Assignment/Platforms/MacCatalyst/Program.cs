@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace Assignment
+namespace ReCAI
 {
     public class Program
     {

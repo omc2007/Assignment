@@ -1,14 +1,15 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using Assignment.Services;
-using Assignment.Models;
+using ReCAI.Services;
+using ReCAI.Models;
 
-namespace Assignment.ViewModels;
+namespace ReCAI.ViewModels;
 
 public class SignUpViewModel : INotifyPropertyChanged
 {
     private readonly IUserService userService;
+    private readonly FirebaseUserService firebase;
     private string firstName;
     private string lastName;
     private string email;
@@ -72,9 +73,11 @@ public class SignUpViewModel : INotifyPropertyChanged
     public ICommand GoToSignInCommand { get; }
 
 
-    public SignUpViewModel(IUserService userService)
+
+    public SignUpViewModel(IUserService userService, FirebaseUserService firebase)
     {
         this.userService = userService;
+        this.firebase = firebase;
 
         TogglePasswordCommand = new Command(() => IsPassword = !IsPassword);
         SignUpCommand = new Command(SignUp);
@@ -83,21 +86,21 @@ public class SignUpViewModel : INotifyPropertyChanged
 
     private async void SignUp()
     {
+        // בדיקת אימייל
         if (!Email.Contains("@"))
         {
             ErrorMessage = "Email לא תקין";
             return;
         }
 
-        // בדיקה אם כבר קיים
+        // בדיקה אם המשתמש כבר קיים (מקומי)
         if (userService.ExistsByEmail(Email))
         {
             ErrorMessage = "המשתמש כבר קיים";
             return;
         }
 
-        // הוספת משתמש חדש
-        userService.Add(new AppUser
+        var newUser = new AppUser
         {
             FirstName = FirstName,
             LastName = LastName,
@@ -106,7 +109,13 @@ public class SignUpViewModel : INotifyPropertyChanged
             Password = Password,
             IsAdmin = false,
             CreatedAt = DateTime.Now
-        });
+        };
+
+        // שמירה מקומית (עדיין עובד אצלך בפרויקט)
+        userService.Add(newUser);
+
+        // שמירה ל-Firebase
+        await firebase.AddUser(newUser);
 
         ErrorMessage = "";
 

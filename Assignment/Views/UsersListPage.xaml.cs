@@ -1,6 +1,6 @@
-using Assignment.ViewModels;
+using ReCAI.ViewModels;
 
-namespace Assignment.Views;
+namespace ReCAI.Views;
 
 public partial class UsersListPage : ContentPage
 {

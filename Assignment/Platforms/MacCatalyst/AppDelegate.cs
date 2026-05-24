@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace Assignment
+namespace ReCAI
 {
     [Register("AppDelegate")]
     public class AppDelegate : MauiUIApplicationDelegate

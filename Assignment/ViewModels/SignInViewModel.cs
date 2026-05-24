@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using Assignment.Services;
-using Assignment.Models;
-namespace Assignment.ViewModels;
+using ReCAI.Services;
+using ReCAI.Models;
+namespace ReCAI.ViewModels;
 
 
 
