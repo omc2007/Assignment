@@ -5,15 +5,6 @@
     x:Class="ReCAI.Views.AccountPage"
     Title="Account">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem
-            Text="Delete"
-            Command="{Binding DeleteCommand}"
-            IsEnabled="{Binding CanDelete}"
-            Order="Primary"
-            Priority="0" />
-    </ContentPage.ToolbarItems>
-
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="12">
 
@@ -40,6 +31,13 @@
                 Text="Update"
                 Command="{Binding UpdateCommand}"
                 IsEnabled="{Binding CanUpdate}" />
+
+            <Button
+                Text="Delete"
+                Command="{Binding DeleteCommand}"
+                IsEnabled="{Binding CanDelete}"
+                BackgroundColor="DarkRed"
+                TextColor="White" />
 
             <Label
                 Text="{Binding ErrorMessage}"

@@ -14,7 +14,11 @@ public class MainViewModel : INotifyPropertyChanged
     public string Greeting
     {
         get => greeting;
-        set { greeting = value; OnPropertyChanged(); }
+        set
+        {
+            greeting = value;
+            OnPropertyChanged();
+        }
     }
 
     public ICommand GoHomeCommand { get; }
@@ -26,45 +30,58 @@ public class MainViewModel : INotifyPropertyChanged
     {
         this.session = session;
 
-        GoHomeCommand = new Command(async () => await Shell.Current.GoToAsync("//MainPage"));
-        GoAdminCommand = new Command(GoAdmin);
-        GoAccountCommand = new Command(GoAccount);
-        SignOutCommand = new Command(SignOut);
+        GoHomeCommand = new Command(async () => await GoHomeAsync());
+        GoAdminCommand = new Command(async () => await GoAdminAsync());
+        GoAccountCommand = new Command(async () => await GoAccountAsync());
+        SignOutCommand = new Command(async () => await SignOutAsync());
     }
 
-    private async void GoAdmin()
+    private async Task GoHomeAsync()
+    {
+        await Shell.Current.GoToAsync("//MainPage");
+    }
+
+    private async Task GoAdminAsync()
     {
         if (!session.IsAdmin)
         {
-            await Application.Current.MainPage.DisplayAlert("Access denied", "Admin only", "OK");
+            await Application.Current.MainPage.DisplayAlert(
+                "Access denied",
+                "Admin only",
+                "OK");
+
             return;
         }
 
         await Shell.Current.GoToAsync("//AdminPage");
     }
 
-    private async void GoAccount()
+    private async Task GoAccountAsync()
     {
         if (string.IsNullOrWhiteSpace(session.CurrentUserId))
         {
+            await Application.Current.MainPage.DisplayAlert(
+                "Session error",
+                "No connected user was found. Please sign in again.",
+                "OK");
+
             await Shell.Current.GoToAsync("//SignInPage");
             return;
         }
 
-        await Shell.Current.GoToAsync($"//AccountPage?userId={Uri.EscapeDataString(session.CurrentUserId)}");
+        string encodedUserId = Uri.EscapeDataString(session.CurrentUserId);
+        await Shell.Current.GoToAsync($"//AccountPage?userId={encodedUserId}");
     }
 
-
-  private async void SignOut()
+    private async Task SignOutAsync()
     {
-        session.SignOut();   // מנקה משתמש מחובר
+        session.SignOut();
         await Shell.Current.GoToAsync("//SignInPage");
     }
-    
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    private void OnPropertyChanged([CallerMemberName] string name = null)
+    private void OnPropertyChanged([CallerMemberName] string? name = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }

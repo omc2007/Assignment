@@ -1,17 +1,22 @@
+using ReCAI.Services;
 using ReCAI.ViewModels;
-
-
 
 namespace ReCAI.Views;
 
 public partial class AccountPage : ContentPage, IQueryAttributable
 {
     private readonly AccountViewModel vm;
+    private readonly ISessionService session;
 
-    public AccountPage(AccountViewModel vm)
+    private bool loadedFromQuery = false;
+
+    public AccountPage(AccountViewModel vm, ISessionService session)
     {
         InitializeComponent();
+
         this.vm = vm;
+        this.session = session;
+
         BindingContext = vm;
     }
 
@@ -20,8 +25,28 @@ public partial class AccountPage : ContentPage, IQueryAttributable
         if (query.TryGetValue("userId", out var val))
         {
             var id = val?.ToString() ?? "";
-            vm.Load(id);
+
+            if (!string.IsNullOrWhiteSpace(id))
+            {
+                loadedFromQuery = true;
+                vm.Load(id);
+            }
+        }
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        if (loadedFromQuery)
+        {
+            loadedFromQuery = false;
+            return;
+        }
+
+        if (!string.IsNullOrWhiteSpace(session.CurrentUserId))
+        {
+            vm.Load(session.CurrentUserId);
         }
     }
 }
-

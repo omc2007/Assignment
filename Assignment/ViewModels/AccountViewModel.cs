@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using ReCAI.Models;
 using ReCAI.Services;
+using ReCAI.Views;
 
 namespace ReCAI.ViewModels;
 
@@ -67,7 +68,6 @@ public class AccountViewModel : INotifyPropertyChanged
         !string.IsNullOrWhiteSpace(Email) &&
         !string.IsNullOrWhiteSpace(Mobile);
 
-    // ✅ רק Admin יכול למחוק
     public bool CanDelete => session.IsAdmin;
 
     public ICommand UpdateCommand { get; }
@@ -82,7 +82,6 @@ public class AccountViewModel : INotifyPropertyChanged
         DeleteCommand = new Command(Delete);
     }
 
-    // ✅ Load רק מקבל userId, הרשאות באות מה-session
     public void Load(string id)
     {
         OnPropertyChanged(nameof(CanDelete));
@@ -121,11 +120,11 @@ public class AccountViewModel : INotifyPropertyChanged
         });
 
         ErrorMessage = "";
+
         if (session.IsAdmin)
-            await Shell.Current.GoToAsync("//UsersListPage");
+            await Shell.Current.GoToAsync(nameof(UsersListPage));
         else
             await Shell.Current.GoToAsync("//MainPage");
-
     }
 
     private async void Delete()
@@ -134,7 +133,8 @@ public class AccountViewModel : INotifyPropertyChanged
             return;
 
         userService.Delete(UserId);
-        await Shell.Current.GoToAsync("//UsersListPage");
+
+        await Shell.Current.GoToAsync(nameof(UsersListPage));
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -144,5 +144,3 @@ public class AccountViewModel : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 }
-
-

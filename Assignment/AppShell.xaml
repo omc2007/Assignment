@@ -5,28 +5,57 @@
     xmlns:views="clr-namespace:ReCAI.Views"
     x:Class="ReCAI.AppShell"
     FlyoutBehavior="Flyout">
-    <!-- SignIn/SignUp מחוץ לתפריט -->
-    <ShellContent Route="SignInPage" ContentTemplate="{DataTemplate views:SignInPage}" />
-    <ShellContent Route="SignUpPage" ContentTemplate="{DataTemplate views:SignUpPage}" />
 
-    <!-- תפריט קבוע לכל האפליקציה -->
-    <FlyoutItem x:Name="HomeItem" Title="Home" Route="MainPage">
-        <ShellContent ContentTemplate="{DataTemplate views:MainPage}" />
+    <!-- SignIn and SignUp are hidden from the flyout menu -->
+    <ShellContent
+        Route="SignInPage"
+        ContentTemplate="{DataTemplate views:SignInPage}"
+        FlyoutItemIsVisible="False" />
+
+    <ShellContent
+        Route="SignUpPage"
+        ContentTemplate="{DataTemplate views:SignUpPage}"
+        FlyoutItemIsVisible="False" />
+
+    <!-- Main flyout menu -->
+    <FlyoutItem
+        x:Name="HomeItem"
+        Title="Home"
+        Route="MainPage">
+
+        <ShellContent
+            Route="MainPageContent"
+            ContentTemplate="{DataTemplate views:MainPage}" />
+
     </FlyoutItem>
 
+    <FlyoutItem
+        x:Name="AccountItem"
+        Title="Account"
+        Route="AccountPage">
 
-    <FlyoutItem x:Name="AccountItem" Title="Account" Route="AccountPage">
-    <ShellContent ContentTemplate="{DataTemplate views:AccountPage}" />
+        <ShellContent
+            Route="AccountPageContent"
+            ContentTemplate="{DataTemplate views:AccountPage}" />
+
     </FlyoutItem>
 
-    <FlyoutItem x:Name="UsersItem" Title="Users" Route="UsersListPage">
-        <ShellContent ContentTemplate="{DataTemplate views:UsersListPage}" />
+    <!-- Admin appears only for Admin users -->
+    <FlyoutItem
+        x:Name="AdminItem"
+        Title="Admin"
+        Route="AdminPage"
+        IsVisible="False">
+
+        <ShellContent
+            Route="AdminPageContent"
+            ContentTemplate="{DataTemplate views:AdminPage}" />
+
     </FlyoutItem>
 
-    <FlyoutItem x:Name="AdminItem" Title="Admin" Route="AdminPage">
-        <ShellContent ContentTemplate="{DataTemplate views:AdminPage}" />
-    </FlyoutItem>
+    <!-- Menu action -->
+    <MenuItem
+        Text="SignOut"
+        Clicked="OnSignOutClicked" />
 
 </Shell>
-
-

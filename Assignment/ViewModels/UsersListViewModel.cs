@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using ReCAI.Models;
 using ReCAI.Services;
-
+using ReCAI.Views;
 
 namespace ReCAI.ViewModels;
 
@@ -58,16 +58,14 @@ public class UsersListViewModel : INotifyPropertyChanged
         Reload();
     }
 
-
     private void Reload()
     {
         Users.Clear();
 
         var all = userService.GetAll();
 
-        IEnumerable<Models.AppUser> baseList = all;
+        IEnumerable<AppUser> baseList = all;
 
-        // אם לא אדמין, רואה רק את עצמו
         if (!session.IsAdmin && !string.IsNullOrWhiteSpace(session.CurrentUserId))
         {
             baseList = all.Where(u => u.Id == session.CurrentUserId);
@@ -83,17 +81,14 @@ public class UsersListViewModel : INotifyPropertyChanged
             Users.Add(u);
     }
 
-
-
     private async void OpenUser(AppUser user)
     {
         SelectedUser = null;
 
         await Shell.Current.GoToAsync(
-            $"//AccountPage?userId={Uri.EscapeDataString(user.Id)}"
+            $"{nameof(AccountPage)}?userId={Uri.EscapeDataString(user.Id)}"
         );
     }
-
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -102,4 +97,3 @@ public class UsersListViewModel : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 }
-

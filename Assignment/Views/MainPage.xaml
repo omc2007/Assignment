@@ -5,17 +5,20 @@
     x:Class="ReCAI.Views.MainPage"
     Title="Home">
 
-    <!-- Toolbar -->
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Home" Command="{Binding GoHomeCommand}" Priority="0" Order="Primary" />
-        <ToolbarItem Text="Admin" Command="{Binding GoAdminCommand}" Priority="1" Order="Primary" />
-        <ToolbarItem Text="Account" Command="{Binding GoAccountCommand}" Priority="2" Order="Primary" />
-        <ToolbarItem Text="SignOut" Command="{Binding SignOutCommand}" Priority="3" Order="Primary" />
-    </ContentPage.ToolbarItems>
+    <VerticalStackLayout
+        Padding="30"
+        Spacing="16"
+        VerticalOptions="Center">
 
-    <VerticalStackLayout Padding="30" Spacing="16" VerticalOptions="Center">
-        <Label Text="{Binding Greeting}" FontSize="22" HorizontalOptions="Center" />
-        <Label Text="Make your greatest app here!" HorizontalOptions="Center" />
+        <Label
+            Text="{Binding Greeting}"
+            FontSize="22"
+            HorizontalOptions="Center" />
+
+        <Label
+            Text="Make your greatest app here!"
+            HorizontalOptions="Center" />
+
     </VerticalStackLayout>
-    
+
 </ContentPage>

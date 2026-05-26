@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
+using ReCAI.Views;
 
 namespace ReCAI.ViewModels;
 
@@ -13,13 +9,11 @@ public class AdminViewModel
 
     public AdminViewModel()
     {
-        ViewUsersCommand = new Command(ViewUsers);
+        ViewUsersCommand = new Command(async () => await ViewUsersAsync());
     }
 
-    private async void ViewUsers()
+    private async Task ViewUsersAsync()
     {
-        await Shell.Current.GoToAsync("//UsersListPage");
-
+        await Shell.Current.GoToAsync(nameof(UsersListPage));
     }
 }
-
