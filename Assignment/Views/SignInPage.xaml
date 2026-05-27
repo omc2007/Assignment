@@ -1,67 +1,70 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
+    x:Class="ReCAI.Views.SignInPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="ReCAI.Views.SignInPage"
     Title="Sign In"
+    Shell.NavBarIsVisible="False"
     Shell.FlyoutBehavior="Disabled">
-    
 
-    <VerticalStackLayout
-        Padding="30"
-        Spacing="15"
-        VerticalOptions="Center">
+    <Grid>
 
-        <!-- Title -->
-        <Label
-            Text="ReCAI"
-            FontSize="32"
-            HorizontalOptions="Center"
-            FontAttributes="Bold" />
+        <!-- Full screen background image -->
+        <Image
+            Source="login_background.png"
+            Aspect="AspectFill" />
 
-        <!-- Email -->
-        <Entry
-            Placeholder="Email"
-            Text="{Binding Email}" />
+        <!-- Optional light overlay for readability -->
+        <BoxView
+            BackgroundColor="#40FFFFFF" />
 
-        <!-- Password -->
-        <Grid ColumnDefinitions="*,Auto">
+        <!-- Foreground content -->
+        <ScrollView>
+            <VerticalStackLayout
+                Padding="30"
+                Spacing="16"
+                VerticalOptions="Center"
+                HorizontalOptions="Fill"
+                Margin="0,40,0,20">
 
-            <Entry
-                Grid.Column="0"
-                Placeholder="Password"
-                IsPassword="{Binding IsPassword}"
-                Text="{Binding Password}" />
+                <Frame
+                    BackgroundColor="#CCFFFFFF"
+                    CornerRadius="24"
+                    Padding="20"
+                    HasShadow="True">
 
-            <Button
-                Grid.Column="1"
-                Text="👁"
-                Command="{Binding TogglePasswordCommand}" />
-        </Grid>
+                    <VerticalStackLayout Spacing="5">
 
-        <!-- Sign In -->
-        <Button
-            Text="Sign In"
-            Command="{Binding SignInCommand}"
-            IsEnabled="{Binding CanSignIn}" />
-        <Label
-    Text="Don't have an account? Sign Up"
-    TextColor="Blue"
-    FontSize="14"
-    TextDecorations="Underline"
-    HorizontalOptions="Center">
-            <Label.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding GoToSignUpCommand}" />
-            </Label.GestureRecognizers>
-        </Label>
+                        <Entry
+                            Placeholder="Email"
+                            Text="{Binding Email}"
+                            Keyboard="Email" 
+                            TextColor="Black"/>
 
+                        <Entry
+                            Placeholder="Password"
+                            Text="{Binding Password}"
+                            IsPassword="{Binding IsPassword}" 
+                            TextColor="Black"/>
 
-        <!-- Error -->
-        <Label
-            Text="{Binding ErrorMessage}"
-            TextColor="Red"
-            HorizontalOptions="Center"/>
+                        <Button
+                            Text="Sign In"
+                            Command="{Binding SignInCommand}" />
 
-    </VerticalStackLayout>
+                        <Button
+                            Text="Sign Up"
+                            Command="{Binding GoToSignUpCommand}" />
 
+                        <Label
+                            Text="{Binding ErrorMessage}"
+                            TextColor="Red"
+                            HorizontalOptions="Center" />
+
+                    </VerticalStackLayout>
+                </Frame>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
 </ContentPage>

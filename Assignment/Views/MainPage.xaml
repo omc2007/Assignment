@@ -1,24 +1,66 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
+    x:Class="ReCAI.Views.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="ReCAI.Views.MainPage"
     Title="Home">
 
-    <VerticalStackLayout
-        Padding="30"
-        Spacing="16"
-        VerticalOptions="Center">
+    <Grid>
 
-        <Label
-            Text="{Binding Greeting}"
-            FontSize="22"
-            HorizontalOptions="Center" />
+        <Image
+            Source="login_background.png"
+            Aspect="AspectFill"
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill" />
 
-        <Label
-            Text="Make your greatest app here!"
-            HorizontalOptions="Center" />
+        <Grid
+            Padding="25"
+            RowDefinitions="*,Auto">
 
-    </VerticalStackLayout>
+            <VerticalStackLayout
+                Grid.Row="0"
+                Spacing="18"
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
+
+                <Frame
+                    BackgroundColor="#CCFFFFFF"
+                    CornerRadius="28"
+                    Padding="22"
+                    HasShadow="True"
+                    WidthRequest="320">
+
+                    <VerticalStackLayout Spacing="14">
+
+                        <Label
+                            Text="Welcome to ReCAI"
+                            FontSize="30"
+                            FontAttributes="Bold"
+                            TextColor="#0B315A"
+                            HorizontalTextAlignment="Center" />
+
+                        <Label
+                            Text="Smart recycling starts here"
+                            FontSize="19"
+                            FontAttributes="Bold"
+                            TextColor="#16824F"
+                            HorizontalTextAlignment="Center" />
+
+                        <Label
+                            Text="Scan products, learn where they belong, and play eco-friendly games while helping create a cleaner world."
+                            FontSize="15"
+                            TextColor="#222222"
+                            HorizontalTextAlignment="Center"
+                            LineBreakMode="WordWrap" />
+
+                    </VerticalStackLayout>
+
+                </Frame>
+
+            </VerticalStackLayout>
+
+        </Grid>
+
+    </Grid>
 
 </ContentPage>

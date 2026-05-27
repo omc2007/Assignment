@@ -1,74 +1,95 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
+    x:Class="ReCAI.Views.SignUpPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="ReCAI.Views.SignUpPage"
     Title="Sign Up"
+    Shell.NavBarIsVisible="False"
     Shell.FlyoutBehavior="Disabled">
 
-    <ScrollView>
-        <VerticalStackLayout
-            Padding="30"
-            Spacing="12">
+    <Grid>
 
-            <Label
-                Text="Create Account"
-                FontSize="28"
-                HorizontalOptions="Center"
-                FontAttributes="Bold" />
+        <Image
+            Source="signup_background.png"
+            Aspect="AspectFill" />
 
-            <Entry Placeholder="First Name"
-                   Text="{Binding FirstName}" />
+        <BoxView BackgroundColor="#35FFFFFF" />
 
-            <Entry Placeholder="Last Name"
-                   Text="{Binding LastName}" />
+        <ScrollView>
+            <VerticalStackLayout
+                Padding="30"
+                Spacing="16"
+                VerticalOptions="Center"
+                HorizontalOptions="Fill"
+                Margin="0,40,0,20">
 
-            <Entry Placeholder="Email"
-                   Keyboard="Email"
-                   Text="{Binding Email}" />
+                <Label
+                    Text="Create Account"
+                    FontSize="28"
+                    FontAttributes="Bold"
+                    TextColor="#123B66"
+                    HorizontalOptions="Center" />
 
-            <!-- Password -->
-            <Grid ColumnDefinitions="*,Auto">
+                <Frame
+                    BackgroundColor="#CCFFFFFF"
+                    CornerRadius="24"
+                    Padding="20"
+                    HasShadow="True">
 
-                <Entry
-                    Grid.Column="0"
-                    Placeholder="Password"
-                    IsPassword="{Binding IsPassword}"
-                    Text="{Binding Password}" />
+                    <VerticalStackLayout Spacing="14">
 
-                <Button
-                    Grid.Column="1"
-                    Text="👁"
-                    Command="{Binding TogglePasswordCommand}" />
-            </Grid>
+                        <Entry
+                            Placeholder="First Name"
+                            Text="{Binding FirstName}"
+                            TextColor="Black"
+                            PlaceholderColor="Gray" />
 
-            <Entry Placeholder="Mobile"
-                   Keyboard="Telephone"
-                   Text="{Binding Mobile}" />
+                        <Entry
+                            Placeholder="Last Name"
+                            Text="{Binding LastName}"
+                            TextColor="Black"
+                            PlaceholderColor="Gray" />
 
-            <Button
-                Text="Sign Up"
-                Command="{Binding SignUpCommand}"
-                IsEnabled="{Binding CanSignUp}" />
-            <Label
-    Text="Already have an account? Sign In"
-    TextColor="GreenYellow"
-    HorizontalOptions="Center">
+                        <Entry
+                            Placeholder="Email"
+                            Text="{Binding Email}"
+                            Keyboard="Email"
+                            TextColor="Black"
+                            PlaceholderColor="Gray" />
 
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer
-            Command="{Binding GoToSignInCommand}" />
-                </Label.GestureRecognizers>
+                        <Entry
+                            Placeholder="Password"
+                            Text="{Binding Password}"
+                            IsPassword="{Binding IsPassword}"
+                            TextColor="Black"
+                            PlaceholderColor="Gray" />
 
-            </Label>
+                        <Entry
+                            Placeholder="Mobile"
+                            Text="{Binding Mobile}"
+                            Keyboard="Telephone"
+                            TextColor="Black"
+                            PlaceholderColor="Gray" />
 
+                        <Button
+                            Text="Sign Up"
+                            Command="{Binding SignUpCommand}" />
 
-            <Label
-                Text="{Binding ErrorMessage}"
-                TextColor="Red"
-                HorizontalOptions="Center"/>
+                        <Button
+                            Text="Back to Sign In"
+                            Command="{Binding GoToSignInCommand}" />
 
-        </VerticalStackLayout>
-    </ScrollView>
+                        <Label
+                            Text="{Binding ErrorMessage}"
+                            TextColor="Red"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center" />
 
+                    </VerticalStackLayout>
+                </Frame>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
 </ContentPage>
