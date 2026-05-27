@@ -4,16 +4,21 @@ using CommunityToolkit.Maui;
 using ReCAI.Services;
 using ReCAI.Views;
 using ReCAI.ViewModels;
+using ZXing.Net.Maui.Controls;
+
 namespace ReCAI;
+
 public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
-        builder.UseMauiApp<App>().ConfigureFonts(fonts =>
+
+        builder.UseMauiApp<App>().UseBarcodeReader().ConfigureFonts(fonts =>
         {
             fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
         }).UseMauiCommunityToolkit();
+
         // ===== Dependency Injection =====
         builder.Services.AddTransient<SignInPage>();
         builder.Services.AddTransient<SignInViewModel>();
@@ -21,6 +26,7 @@ public static class MauiProgram
         builder.Services.AddTransient<SignUpViewModel>();
         builder.Services.AddTransient<MainPage>();
         builder.Services.AddTransient<MainViewModel>();
+        builder.Services.AddTransient<ScanPage>();
         builder.Services.AddTransient<AdminPage>();
         builder.Services.AddTransient<AdminViewModel>();
         builder.Services.AddSingleton<IUserService, InMemoryUserService>();
@@ -30,6 +36,8 @@ public static class MauiProgram
         builder.Services.AddTransient<ReCAI.ViewModels.AccountViewModel>();
         builder.Services.AddSingleton<ISessionService, SessionService>();
         builder.Services.AddSingleton<FirebaseUserService>();
+        builder.Services.AddSingleton<IProductService, ProductService>();
+
         return builder.Build();
     }
 }

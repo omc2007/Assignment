@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.Maui.Controls"
+    x:Class="ReCAI.Views.ScanPage"
+    Title="Scan Product">
+
+    <Grid RowDefinitions="*,Auto,Auto,Auto" Padding="16" RowSpacing="12">
+
+        <zxing:CameraBarcodeReaderView
+            x:Name="barcodeReader"
+            Grid.Row="0"
+            BarcodesDetected="OnBarcodesDetected" />
+
+        <Label
+            x:Name="ResultLabel"
+            Grid.Row="1"
+            Text="Point the camera at a product barcode"
+            FontSize="18"
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center" />
+
+        <Label
+            x:Name="BinColorLabel"
+            Grid.Row="2"
+            Text=""
+            FontSize="22"
+            FontAttributes="Bold"
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center" />
+
+        <Button
+            Grid.Row="3"
+            Text="Back"
+            Clicked="OnBackClicked" />
+
+    </Grid>
+</ContentPage>

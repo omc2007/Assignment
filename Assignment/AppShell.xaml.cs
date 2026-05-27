@@ -31,6 +31,7 @@ namespace ReCAI
             // Regular users see the Game page.
             // Admin does not see the Game page.
             GameItem.IsVisible = isLoggedIn && !isAdmin;
+            ScanItem.IsVisible = isLoggedIn && !isAdmin;
 
             // Account stays in the menu, but admin cannot click it.
             AccountItem.IsVisible = isLoggedIn;
