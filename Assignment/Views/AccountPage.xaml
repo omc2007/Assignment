@@ -24,7 +24,13 @@
 
             <Entry Placeholder="First Name" Text="{Binding FirstName}" />
             <Entry Placeholder="Last Name" Text="{Binding LastName}" />
-            <Entry Placeholder="Email" Keyboard="Email" Text="{Binding Email}" />
+
+            <Entry
+                Placeholder="Email"
+                Keyboard="Email"
+                Text="{Binding Email}"
+                IsEnabled="{Binding CanEditEmail}" />
+
             <Entry Placeholder="Mobile" Keyboard="Telephone" Text="{Binding Mobile}" />
 
             <Button
@@ -36,6 +42,7 @@
                 Text="Delete"
                 Command="{Binding DeleteCommand}"
                 IsEnabled="{Binding CanDelete}"
+                IsVisible="{Binding CanDelete}"
                 BackgroundColor="DarkRed"
                 TextColor="White" />
 

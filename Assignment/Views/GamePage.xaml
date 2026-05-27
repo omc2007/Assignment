@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ReCAI.Views.GamePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Recycle Game"
+    BackgroundColor="#EAF7EF">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="20"
+            Spacing="18"
+            HorizontalOptions="Fill"
+            VerticalOptions="Fill">
+
+            <Label
+                Text="Recycle Game"
+                FontSize="32"
+                FontAttributes="Bold"
+                TextColor="#1B5E20"
+                HorizontalOptions="Center" />
+
+            <Label
+                Text="{Binding Score, StringFormat='Score: {0}'}"
+                FontSize="20"
+                FontAttributes="Bold"
+                TextColor="#2E7D32"
+                HorizontalOptions="Center" />
+
+            <Border
+                Stroke="#B7E4C7"
+                StrokeThickness="2"
+                BackgroundColor="White"
+                StrokeShape="RoundRectangle 25"
+                Padding="18"
+                HorizontalOptions="Fill">
+
+                <VerticalStackLayout Spacing="12">
+
+                    <Label
+                        Text="Which bin does this item belong to?"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        TextColor="#263238"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center" />
+
+                    <Image
+                        x:Name="ProductImage"
+                        Source="{Binding CurrentItem.ImageName}"
+                        HeightRequest="190"
+                        WidthRequest="190"
+                        Aspect="AspectFit"
+                        HorizontalOptions="Center" />
+
+                    <Label
+                        Text="{Binding CurrentItem.Name}"
+                        FontSize="22"
+                        FontAttributes="Bold"
+                        TextColor="#37474F"
+                        HorizontalOptions="Center" />
+
+                    <Label
+                        Text="{Binding FeedbackMessage}"
+                        FontSize="16"
+                        TextColor="#1B5E20"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center" />
+
+                </VerticalStackLayout>
+            </Border>
+
+            <Label
+                Text="Tap the correct bin"
+                FontSize="18"
+                FontAttributes="Bold"
+                TextColor="#263238"
+                HorizontalOptions="Center" />
+
+            <Grid
+                ColumnDefinitions="*,*"
+                RowDefinitions="Auto,Auto,Auto"
+                ColumnSpacing="16"
+                RowSpacing="16">
+
+                <Border
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Stroke="#FF9800"
+                    StrokeThickness="2"
+                    BackgroundColor="White"
+                    StrokeShape="RoundRectangle 22"
+                    Padding="8">
+
+                    <ImageButton
+                        x:Name="OrangeBinButton"
+                        Source="bin_orange.png"
+                        BackgroundColor="Transparent"
+                        HeightRequest="135"
+                        Aspect="AspectFit"
+                        CommandParameter="Orange"
+                        Clicked="OnBinClicked" />
+                </Border>
+
+                <Border
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Stroke="#2196F3"
+                    StrokeThickness="2"
+                    BackgroundColor="White"
+                    StrokeShape="RoundRectangle 22"
+                    Padding="8">
+
+                    <ImageButton
+                        x:Name="BlueBinButton"
+                        Source="bin_blue.png"
+                        BackgroundColor="Transparent"
+                        HeightRequest="135"
+                        Aspect="AspectFit"
+                        CommandParameter="Blue"
+                        Clicked="OnBinClicked" />
+                </Border>
+
+                <Border
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Stroke="#7E57C2"
+                    StrokeThickness="2"
+                    BackgroundColor="White"
+                    StrokeShape="RoundRectangle 22"
+                    Padding="8">
+
+                    <ImageButton
+                        x:Name="PurpleBinButton"
+                        Source="bin_purple.png"
+                        BackgroundColor="Transparent"
+                        HeightRequest="135"
+                        Aspect="AspectFit"
+                        CommandParameter="Purple"
+                        Clicked="OnBinClicked" />
+                </Border>
+
+                <Border
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Stroke="#8D6E63"
+                    StrokeThickness="2"
+                    BackgroundColor="White"
+                    StrokeShape="RoundRectangle 22"
+                    Padding="8">
+
+                    <ImageButton
+                        x:Name="BrownBinButton"
+                        Source="bin_brown.png"
+                        BackgroundColor="Transparent"
+                        HeightRequest="135"
+                        Aspect="AspectFit"
+                        CommandParameter="Brown"
+                        Clicked="OnBinClicked" />
+                </Border>
+
+                <Border
+                    Grid.Row="2"
+                    Grid.ColumnSpan="2"
+                    Stroke="#4CAF50"
+                    StrokeThickness="2"
+                    BackgroundColor="White"
+                    StrokeShape="RoundRectangle 22"
+                    Padding="8"
+                    HorizontalOptions="Center"
+                    WidthRequest="170">
+
+                    <ImageButton
+                        x:Name="RegularBinButton"
+                        Source="bin_regular.png"
+                        BackgroundColor="Transparent"
+                        HeightRequest="135"
+                        Aspect="AspectFit"
+                        CommandParameter="Regular"
+                        Clicked="OnBinClicked" />
+                </Border>
+
+            </Grid>
+
+            <Button
+                Text="Restart Game"
+                BackgroundColor="#2E7D32"
+                TextColor="White"
+                FontAttributes="Bold"
+                CornerRadius="20"
+                HeightRequest="48"
+                Clicked="OnRestartClicked" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -58,7 +58,7 @@ public class UsersListViewModel : INotifyPropertyChanged
         Reload();
     }
 
-    private void Reload()
+    public void Reload()
     {
         Users.Clear();
 
@@ -86,7 +86,7 @@ public class UsersListViewModel : INotifyPropertyChanged
         SelectedUser = null;
 
         await Shell.Current.GoToAsync(
-            $"{nameof(AccountPage)}?userId={Uri.EscapeDataString(user.Id)}"
+            $"///AccountPage?userId={Uri.EscapeDataString(user.Id)}"
         );
     }
 

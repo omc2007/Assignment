@@ -9,6 +9,8 @@ namespace ReCAI.ViewModels;
 
 public class AccountViewModel : INotifyPropertyChanged
 {
+    private const string AdminEmail = "admin@gmail.com";
+
     private readonly IUserService userService;
     private readonly ISessionService session;
 
@@ -16,6 +18,7 @@ public class AccountViewModel : INotifyPropertyChanged
     private string firstName = "";
     private string lastName = "";
     private string email = "";
+    private string originalEmail = "";
     private string mobile = "";
     private string errorMessage = "";
     private ImageSource profileImage = "dotnet_bot.png";
@@ -29,25 +32,48 @@ public class AccountViewModel : INotifyPropertyChanged
     public string FirstName
     {
         get => firstName;
-        set { firstName = value; OnPropertyChanged(); OnPropertyChanged(nameof(CanUpdate)); }
+        set
+        {
+            firstName = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(CanUpdate));
+        }
     }
 
     public string LastName
     {
         get => lastName;
-        set { lastName = value; OnPropertyChanged(); OnPropertyChanged(nameof(CanUpdate)); }
+        set
+        {
+            lastName = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(CanUpdate));
+        }
     }
 
     public string Email
     {
         get => email;
-        set { email = value; OnPropertyChanged(); OnPropertyChanged(nameof(CanUpdate)); }
+        set
+        {
+            email = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(CanUpdate));
+            OnPropertyChanged(nameof(IsAdminAccount));
+            OnPropertyChanged(nameof(CanEditEmail));
+            OnPropertyChanged(nameof(CanDelete));
+        }
     }
 
     public string Mobile
     {
         get => mobile;
-        set { mobile = value; OnPropertyChanged(); OnPropertyChanged(nameof(CanUpdate)); }
+        set
+        {
+            mobile = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(CanUpdate));
+        }
     }
 
     public ImageSource ProfileImage
@@ -62,13 +88,20 @@ public class AccountViewModel : INotifyPropertyChanged
         set { errorMessage = value; OnPropertyChanged(); }
     }
 
+    public bool IsAdminAccount =>
+        originalEmail.Trim().ToLower() == AdminEmail;
+
+    public bool CanEditEmail =>
+        !IsAdminAccount;
+
     public bool CanUpdate =>
         !string.IsNullOrWhiteSpace(FirstName) &&
         !string.IsNullOrWhiteSpace(LastName) &&
         !string.IsNullOrWhiteSpace(Email) &&
         !string.IsNullOrWhiteSpace(Mobile);
 
-    public bool CanDelete => session.IsAdmin;
+    public bool CanDelete =>
+        session.IsAdmin && !IsAdminAccount;
 
     public ICommand UpdateCommand { get; }
     public ICommand DeleteCommand { get; }
@@ -84,8 +117,6 @@ public class AccountViewModel : INotifyPropertyChanged
 
     public void Load(string id)
     {
-        OnPropertyChanged(nameof(CanDelete));
-
         var user = userService.GetById(id);
         if (user == null)
         {
@@ -97,13 +128,24 @@ public class AccountViewModel : INotifyPropertyChanged
         FirstName = user.FirstName;
         LastName = user.LastName;
         Email = user.Email;
+        originalEmail = user.Email;
         Mobile = user.Mobile;
 
         ErrorMessage = "";
+
+        OnPropertyChanged(nameof(IsAdminAccount));
+        OnPropertyChanged(nameof(CanEditEmail));
+        OnPropertyChanged(nameof(CanDelete));
+        OnPropertyChanged(nameof(CanUpdate));
     }
 
     private async void Update()
     {
+        if (IsAdminAccount)
+        {
+            Email = AdminEmail;
+        }
+
         if (!Email.Contains("@"))
         {
             ErrorMessage = "Invalid email";
@@ -119,7 +161,12 @@ public class AccountViewModel : INotifyPropertyChanged
             Mobile = Mobile
         });
 
+        originalEmail = Email;
         ErrorMessage = "";
+
+        OnPropertyChanged(nameof(IsAdminAccount));
+        OnPropertyChanged(nameof(CanEditEmail));
+        OnPropertyChanged(nameof(CanDelete));
 
         if (session.IsAdmin)
             await Shell.Current.GoToAsync(nameof(UsersListPage));
@@ -129,7 +176,7 @@ public class AccountViewModel : INotifyPropertyChanged
 
     private async void Delete()
     {
-        if (!session.IsAdmin)
+        if (!session.IsAdmin || IsAdminAccount)
             return;
 
         userService.Delete(UserId);

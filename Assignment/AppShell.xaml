@@ -6,7 +6,7 @@
     x:Class="ReCAI.AppShell"
     FlyoutBehavior="Flyout">
 
-    <!-- SignIn and SignUp are hidden from the flyout menu -->
+    <!-- Pages that should not appear in the flyout menu -->
     <ShellContent
         Route="SignInPage"
         ContentTemplate="{DataTemplate views:SignInPage}"
@@ -17,7 +17,7 @@
         ContentTemplate="{DataTemplate views:SignUpPage}"
         FlyoutItemIsVisible="False" />
 
-    <!-- Main flyout menu -->
+    <!-- Regular app pages -->
     <FlyoutItem
         x:Name="HomeItem"
         Title="Home"
@@ -40,7 +40,7 @@
 
     </FlyoutItem>
 
-    <!-- Admin appears only for Admin users -->
+    <!-- Admin page should be visible only for admin user -->
     <FlyoutItem
         x:Name="AdminItem"
         Title="Admin"
@@ -53,9 +53,9 @@
 
     </FlyoutItem>
 
-    <!-- Menu action -->
+    <!-- Sign out should be visible for everyone -->
     <MenuItem
-        Text="SignOut"
+        Text="Sign Out"
         Clicked="OnSignOutClicked" />
 
 </Shell>

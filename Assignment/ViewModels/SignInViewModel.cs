@@ -71,9 +71,10 @@ public class SignInViewModel : INotifyPropertyChanged
         }
 
         session.CurrentUserId = user.Id;
-        session.IsAdmin = user.IsAdmin;
+        session.IsAdmin = user.Email.Trim().ToLower() == "admin@gmail.com";
 
         ErrorMessage = "";
+        ((AppShell)Shell.Current).SetMenuByUser(user.Email);
         await Shell.Current.GoToAsync("//MainPage");
     }
 

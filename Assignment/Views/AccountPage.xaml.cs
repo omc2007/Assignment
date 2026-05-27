@@ -38,15 +38,11 @@ public partial class AccountPage : ContentPage, IQueryAttributable
     {
         base.OnAppearing();
 
-        if (loadedFromQuery)
-        {
-            loadedFromQuery = false;
-            return;
-        }
-
-        if (!string.IsNullOrWhiteSpace(session.CurrentUserId))
+        if (!loadedFromQuery && !string.IsNullOrWhiteSpace(session.CurrentUserId))
         {
             vm.Load(session.CurrentUserId);
         }
+
+        loadedFromQuery = false;
     }
 }

@@ -1,49 +1,40 @@
-﻿using ReCAI.Services;
-using ReCAI.Views;
+﻿using ReCAI.Views;
 
 namespace ReCAI
 {
     public partial class AppShell : Shell
     {
+        private const string AdminEmail = "admin@gmail.com";
+
         public AppShell()
         {
             InitializeComponent();
 
+            // Register pages that are not directly visible in the flyout menu.
             Routing.RegisterRoute(nameof(UsersListPage), typeof(UsersListPage));
 
-            UpdateFlyoutItems();
+            // Default state before login:
+            // Admin option is hidden.
+            SetMenuByUser(string.Empty);
         }
 
-        protected override void OnNavigated(ShellNavigatedEventArgs args)
+        public void SetMenuByUser(string email)
         {
-            base.OnNavigated(args);
+            string userEmail = email?.Trim().ToLower() ?? string.Empty;
 
-            UpdateFlyoutItems();
-        }
+            bool isAdmin = userEmail == AdminEmail;
 
-        private ISessionService? GetSessionService()
-        {
-            return Handler?.MauiContext?.Services.GetService<ISessionService>();
-        }
-
-        private void UpdateFlyoutItems()
-        {
-            var session = GetSessionService();
-
-            AdminItem.IsVisible = session != null && session.IsAdmin;
+            // Only admin sees the Admin page in the menu.
+            AdminItem.IsVisible = isAdmin;
         }
 
         private async void OnSignOutClicked(object sender, EventArgs e)
         {
-            FlyoutIsPresented = false;
+            // Hide admin menu again after logout.
+            SetMenuByUser(string.Empty);
 
-            var session = GetSessionService();
-
-            session?.SignOut();
-
-            UpdateFlyoutItems();
-
-            await GoToAsync("//SignInPage");
+            // Navigate back to sign in page.
+            await Shell.Current.GoToAsync("//SignInPage");
         }
     }
 }
