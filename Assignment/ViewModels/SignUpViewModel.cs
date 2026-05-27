@@ -10,6 +10,8 @@ public class SignUpViewModel : INotifyPropertyChanged
 {
     private readonly IUserService userService;
     private readonly FirebaseUserService firebase;
+    private readonly ISessionService session;
+
     private string firstName;
     private string lastName;
     private string email;
@@ -69,15 +71,13 @@ public class SignUpViewModel : INotifyPropertyChanged
 
     public ICommand TogglePasswordCommand { get; }
     public ICommand SignUpCommand { get; }
-
     public ICommand GoToSignInCommand { get; }
 
-
-
-    public SignUpViewModel(IUserService userService, FirebaseUserService firebase)
+    public SignUpViewModel(IUserService userService, FirebaseUserService firebase, ISessionService session)
     {
         this.userService = userService;
         this.firebase = firebase;
+        this.session = session;
 
         TogglePasswordCommand = new Command(() => IsPassword = !IsPassword);
         SignUpCommand = new Command(SignUp);
@@ -86,17 +86,15 @@ public class SignUpViewModel : INotifyPropertyChanged
 
     private async void SignUp()
     {
-        // בדיקת אימייל
         if (!Email.Contains("@"))
         {
-            ErrorMessage = "Email לא תקין";
+            ErrorMessage = "Invalid email";
             return;
         }
 
-        // בדיקה אם המשתמש כבר קיים (מקומי)
         if (userService.ExistsByEmail(Email))
         {
-            ErrorMessage = "המשתמש כבר קיים";
+            ErrorMessage = "User already exists";
             return;
         }
 
@@ -111,31 +109,28 @@ public class SignUpViewModel : INotifyPropertyChanged
             CreatedAt = DateTime.Now
         };
 
-        // שמירה מקומית (עדיין עובד אצלך בפרויקט)
         userService.Add(newUser);
 
-        // שמירה ל-Firebase
         await firebase.AddUser(newUser);
+
+        session.CurrentUserId = newUser.Id;
+        session.IsAdmin = false;
 
         ErrorMessage = "";
 
+        ((AppShell)Shell.Current).SetMenuByUser(newUser.Email);
         await Shell.Current.GoToAsync("//MainPage");
     }
 
-
     public event PropertyChangedEventHandler PropertyChanged;
-
-    // add new user
-
 
     private void OnPropertyChanged([CallerMemberName] string name = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
+
     private async void GoToSignIn()
     {
         await Shell.Current.GoToAsync("//SignInPage");
     }
-
 }
-
