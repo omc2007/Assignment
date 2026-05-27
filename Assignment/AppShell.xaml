@@ -40,6 +40,19 @@
 
     </FlyoutItem>
 
+    <!-- Game should be visible only for regular users -->
+    <FlyoutItem
+        x:Name="GameItem"
+        Title="Game"
+        Route="GamePage"
+        IsVisible="False">
+
+        <ShellContent
+            Route="GamePageContent"
+            ContentTemplate="{DataTemplate views:GamePage}" />
+
+    </FlyoutItem>
+
     <!-- Admin page should be visible only for admin user -->
     <FlyoutItem
         x:Name="AdminItem"

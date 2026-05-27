@@ -14,7 +14,7 @@ namespace ReCAI
             Routing.RegisterRoute(nameof(UsersListPage), typeof(UsersListPage));
 
             // Default state before login:
-            // Admin option is hidden.
+            // Admin and Game options are hidden.
             SetMenuByUser(string.Empty);
         }
 
@@ -22,15 +22,24 @@ namespace ReCAI
         {
             string userEmail = email?.Trim().ToLower() ?? string.Empty;
 
+            bool isLoggedIn = !string.IsNullOrWhiteSpace(userEmail);
             bool isAdmin = userEmail == AdminEmail;
 
-            // Only admin sees the Admin page in the menu.
+            // Admin sees the Admin page.
             AdminItem.IsVisible = isAdmin;
+
+            // Regular users see the Game page.
+            // Admin does not see the Game page.
+            GameItem.IsVisible = isLoggedIn && !isAdmin;
+
+            // Account stays in the menu, but admin cannot click it.
+            AccountItem.IsVisible = isLoggedIn;
+            AccountItem.IsEnabled = !isAdmin;
         }
 
         private async void OnSignOutClicked(object sender, EventArgs e)
         {
-            // Hide admin menu again after logout.
+            // Hide admin and game menu again after logout.
             SetMenuByUser(string.Empty);
 
             // Navigate back to sign in page.
