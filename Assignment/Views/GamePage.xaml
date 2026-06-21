@@ -7,201 +7,239 @@
     BackgroundColor="#EAF7EF">
 
     <Grid
-        Padding="12"
-        RowDefinitions="Auto,Auto,*,Auto,Auto"
-        RowSpacing="8">
+    Padding="12"
+    RowDefinitions="Auto,Auto,*,Auto,Auto,Auto,Auto"
+    RowSpacing="8">
 
         <Label
-            Grid.Row="0"
-            Text="Recycle Game"
-            FontSize="24"
-            FontAttributes="Bold"
-            TextColor="#1B5E20"
-            HorizontalOptions="Center" />
+        Grid.Row="0"
+        Text="Recycle Game"
+        FontSize="24"
+        FontAttributes="Bold"
+        TextColor="#1B5E20"
+        HorizontalOptions="Center" />
 
         <Label
-            Grid.Row="1"
-            Text="{Binding Score, StringFormat='Score: {0}'}"
-            FontSize="16"
-            FontAttributes="Bold"
-            TextColor="#2E7D32"
-            HorizontalOptions="Center" />
+        Grid.Row="1"
+        Text="{Binding Score, StringFormat='Score: {0}'}"
+        FontSize="16"
+        FontAttributes="Bold"
+        TextColor="#2E7D32"
+        HorizontalOptions="Center" />
 
         <Border
-            Grid.Row="2"
-            Stroke="#B7E4C7"
-            StrokeThickness="2"
-            BackgroundColor="White"
-            StrokeShape="RoundRectangle 20"
-            Padding="10"
-            HorizontalOptions="Fill"
-            VerticalOptions="Fill">
+        Grid.Row="2"
+        Stroke="#B7E4C7"
+        StrokeThickness="2"
+        BackgroundColor="White"
+        StrokeShape="RoundRectangle 20"
+        Padding="10"
+        HorizontalOptions="Fill"
+        VerticalOptions="Fill">
 
             <Grid
-                RowDefinitions="Auto,*,Auto,Auto"
-                RowSpacing="6">
+            RowDefinitions="Auto,*,Auto,Auto"
+            RowSpacing="6">
 
                 <Label
-                    Grid.Row="0"
-                    Text="Which bin does this item belong to?"
-                    FontSize="15"
-                    FontAttributes="Bold"
-                    TextColor="#263238"
-                    HorizontalOptions="Center"
-                    HorizontalTextAlignment="Center" />
+                Grid.Row="0"
+                Text="Which bin does this item belong to?"
+                FontSize="15"
+                FontAttributes="Bold"
+                TextColor="#263238"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center" />
 
                 <Image
-                    Grid.Row="1"
-                    x:Name="ProductImage"
-                    Source="{Binding CurrentItem.ImageName}"
-                    HeightRequest="125"
-                    WidthRequest="125"
-                    Aspect="AspectFit"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center" />
+                Grid.Row="1"
+                x:Name="ProductImage"
+                Source="{Binding CurrentItem.ImageName}"
+                HeightRequest="125"
+                WidthRequest="125"
+                Aspect="AspectFit"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
 
                 <Label
-                    Grid.Row="2"
-                    Text="{Binding CurrentItem.Name}"
-                    FontSize="18"
-                    FontAttributes="Bold"
-                    TextColor="#37474F"
-                    HorizontalOptions="Center"
-                    HorizontalTextAlignment="Center" />
+                Grid.Row="2"
+                Text="{Binding CurrentItem.Name}"
+                FontSize="18"
+                FontAttributes="Bold"
+                TextColor="#37474F"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center" />
 
                 <Label
-                    Grid.Row="3"
-                    Text="{Binding FeedbackMessage}"
-                    FontSize="14"
-                    TextColor="#1B5E20"
-                    HorizontalOptions="Center"
-                    HorizontalTextAlignment="Center" />
+                Grid.Row="3"
+                Text="{Binding FeedbackMessage}"
+                FontSize="14"
+                TextColor="#1B5E20"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center" />
 
             </Grid>
         </Border>
 
         <Label
-            Grid.Row="3"
-            Text="Tap the correct bin"
-            FontSize="15"
-            FontAttributes="Bold"
-            TextColor="#263238"
-            HorizontalOptions="Center" />
+        Grid.Row="3"
+        Text="Tap the correct bin"
+        FontSize="15"
+        FontAttributes="Bold"
+        TextColor="#263238"
+        HorizontalOptions="Center" />
 
         <Grid
-            Grid.Row="4"
-            ColumnDefinitions="*,*,*,*,*"
-            RowDefinitions="Auto,Auto"
-            ColumnSpacing="6"
-            RowSpacing="8">
+        Grid.Row="4"
+        ColumnDefinitions="*,*,*,*,*"
+        RowDefinitions="Auto,Auto"
+        ColumnSpacing="6"
+        RowSpacing="8">
 
             <Border
-                Grid.Row="0"
-                Grid.Column="0"
-                Stroke="#FF9800"
-                StrokeThickness="2"
-                BackgroundColor="White"
-                StrokeShape="RoundRectangle 16"
-                Padding="4">
+            Grid.Row="0"
+            Grid.Column="0"
+            Stroke="#FF9800"
+            StrokeThickness="2"
+            BackgroundColor="White"
+            StrokeShape="RoundRectangle 16"
+            Padding="4">
 
                 <ImageButton
-                    x:Name="OrangeBinButton"
-                    Source="bin_orange.png"
-                    BackgroundColor="Transparent"
-                    HeightRequest="78"
-                    Aspect="AspectFit"
-                    CommandParameter="Orange"
-                    Clicked="OnBinClicked" />
+                x:Name="OrangeBinButton"
+                Source="bin_orange.png"
+                BackgroundColor="Transparent"
+                HeightRequest="78"
+                Aspect="AspectFit"
+                CommandParameter="Orange"
+                Clicked="OnBinClicked" />
             </Border>
 
             <Border
-                Grid.Row="0"
-                Grid.Column="1"
-                Stroke="#2196F3"
-                StrokeThickness="2"
-                BackgroundColor="White"
-                StrokeShape="RoundRectangle 16"
-                Padding="4">
+            Grid.Row="0"
+            Grid.Column="1"
+            Stroke="#2196F3"
+            StrokeThickness="2"
+            BackgroundColor="White"
+            StrokeShape="RoundRectangle 16"
+            Padding="4">
 
                 <ImageButton
-                    x:Name="BlueBinButton"
-                    Source="bin_blue.png"
-                    BackgroundColor="Transparent"
-                    HeightRequest="78"
-                    Aspect="AspectFit"
-                    CommandParameter="Blue"
-                    Clicked="OnBinClicked" />
+                x:Name="BlueBinButton"
+                Source="bin_blue.png"
+                BackgroundColor="Transparent"
+                HeightRequest="78"
+                Aspect="AspectFit"
+                CommandParameter="Blue"
+                Clicked="OnBinClicked" />
             </Border>
 
             <Border
-                Grid.Row="0"
-                Grid.Column="2"
-                Stroke="#7E57C2"
-                StrokeThickness="2"
-                BackgroundColor="White"
-                StrokeShape="RoundRectangle 16"
-                Padding="4">
+            Grid.Row="0"
+            Grid.Column="2"
+            Stroke="#7E57C2"
+            StrokeThickness="2"
+            BackgroundColor="White"
+            StrokeShape="RoundRectangle 16"
+            Padding="4">
 
                 <ImageButton
-                    x:Name="PurpleBinButton"
-                    Source="bin_purple.png"
-                    BackgroundColor="Transparent"
-                    HeightRequest="78"
-                    Aspect="AspectFit"
-                    CommandParameter="Purple"
-                    Clicked="OnBinClicked" />
+                x:Name="PurpleBinButton"
+                Source="bin_purple.png"
+                BackgroundColor="Transparent"
+                HeightRequest="78"
+                Aspect="AspectFit"
+                CommandParameter="Purple"
+                Clicked="OnBinClicked" />
             </Border>
 
             <Border
-                Grid.Row="0"
-                Grid.Column="3"
-                Stroke="#8D6E63"
-                StrokeThickness="2"
-                BackgroundColor="White"
-                StrokeShape="RoundRectangle 16"
-                Padding="4">
+            Grid.Row="0"
+            Grid.Column="3"
+            Stroke="#8D6E63"
+            StrokeThickness="2"
+            BackgroundColor="White"
+            StrokeShape="RoundRectangle 16"
+            Padding="4">
 
                 <ImageButton
-                    x:Name="BrownBinButton"
-                    Source="bin_brown.png"
-                    BackgroundColor="Transparent"
-                    HeightRequest="78"
-                    Aspect="AspectFit"
-                    CommandParameter="Brown"
-                    Clicked="OnBinClicked" />
+                x:Name="BrownBinButton"
+                Source="bin_brown.png"
+                BackgroundColor="Transparent"
+                HeightRequest="78"
+                Aspect="AspectFit"
+                CommandParameter="Brown"
+                Clicked="OnBinClicked" />
             </Border>
 
             <Border
-                Grid.Row="0"
-                Grid.Column="4"
-                Stroke="#4CAF50"
-                StrokeThickness="2"
-                BackgroundColor="White"
-                StrokeShape="RoundRectangle 16"
-                Padding="4">
+            Grid.Row="0"
+            Grid.Column="4"
+            Stroke="#4CAF50"
+            StrokeThickness="2"
+            BackgroundColor="White"
+            StrokeShape="RoundRectangle 16"
+            Padding="4">
 
                 <ImageButton
-                    x:Name="RegularBinButton"
-                    Source="bin_regular.png"
-                    BackgroundColor="Transparent"
-                    HeightRequest="78"
-                    Aspect="AspectFit"
-                    CommandParameter="Regular"
-                    Clicked="OnBinClicked" />
+                x:Name="RegularBinButton"
+                Source="bin_regular.png"
+                BackgroundColor="Transparent"
+                HeightRequest="78"
+                Aspect="AspectFit"
+                CommandParameter="Regular"
+                Clicked="OnBinClicked" />
             </Border>
 
             <Button
-                Grid.Row="1"
-                Grid.ColumnSpan="5"
-                Text="Restart Game"
-                BackgroundColor="#2E7D32"
-                TextColor="White"
-                FontAttributes="Bold"
-                CornerRadius="18"
-                HeightRequest="42"
-                Clicked="OnRestartClicked" />
+            Grid.Row="1"
+            Grid.ColumnSpan="5"
+            Text="Restart Game"
+            BackgroundColor="#2E7D32"
+            TextColor="White"
+            FontAttributes="Bold"
+            CornerRadius="18"
+            HeightRequest="42"
+            Clicked="OnRestartClicked" />
 
         </Grid>
+
+        <Label
+        Grid.Row="5"
+        Text="Top 3 Players"
+        FontSize="20"
+        FontAttributes="Bold"
+        TextColor="#1B5E20"
+        HorizontalOptions="Center"
+        Margin="0,8,0,0" />
+
+        <CollectionView
+        Grid.Row="6"
+        x:Name="TopScoresCollectionView"
+        HeightRequest="135">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border
+                    Stroke="#B7E4C7"
+                    StrokeThickness="1"
+                    BackgroundColor="White"
+                    StrokeShape="RoundRectangle 14"
+                    Padding="10"
+                    Margin="0,3">
+
+                        <Label
+                        Text="{Binding DisplayText}"
+                        FontSize="14"
+                        FontAttributes="Bold"
+                        TextColor="#263238"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center" />
+
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
 
     </Grid>
 </ContentPage>

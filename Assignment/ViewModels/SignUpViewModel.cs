@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using ReCAI.Services;
 using ReCAI.Models;
+using Microsoft.Maui.Storage;
 
 namespace ReCAI.ViewModels;
 
@@ -23,43 +24,76 @@ public class SignUpViewModel : INotifyPropertyChanged
     public string FirstName
     {
         get => firstName;
-        set { firstName = value; OnPropertyChanged(); OnPropertyChanged(nameof(CanSignUp)); }
+        set
+        {
+            firstName = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(CanSignUp));
+        }
     }
 
     public string LastName
     {
         get => lastName;
-        set { lastName = value; OnPropertyChanged(); OnPropertyChanged(nameof(CanSignUp)); }
+        set
+        {
+            lastName = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(CanSignUp));
+        }
     }
 
     public string Email
     {
         get => email;
-        set { email = value; OnPropertyChanged(); OnPropertyChanged(nameof(CanSignUp)); }
+        set
+        {
+            email = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(CanSignUp));
+        }
     }
 
     public string Password
     {
         get => password;
-        set { password = value; OnPropertyChanged(); OnPropertyChanged(nameof(CanSignUp)); }
+        set
+        {
+            password = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(CanSignUp));
+        }
     }
 
     public string Mobile
     {
         get => mobile;
-        set { mobile = value; OnPropertyChanged(); OnPropertyChanged(nameof(CanSignUp)); }
+        set
+        {
+            mobile = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(CanSignUp));
+        }
     }
 
     public bool IsPassword
     {
         get => isPassword;
-        set { isPassword = value; OnPropertyChanged(); }
+        set
+        {
+            isPassword = value;
+            OnPropertyChanged();
+        }
     }
 
     public string ErrorMessage
     {
         get => errorMessage;
-        set { errorMessage = value; OnPropertyChanged(); }
+        set
+        {
+            errorMessage = value;
+            OnPropertyChanged();
+        }
     }
 
     public bool CanSignUp =>
@@ -86,6 +120,16 @@ public class SignUpViewModel : INotifyPropertyChanged
 
     private async void SignUp()
     {
+        if (string.IsNullOrWhiteSpace(FirstName) ||
+            string.IsNullOrWhiteSpace(LastName) ||
+            string.IsNullOrWhiteSpace(Email) ||
+            string.IsNullOrWhiteSpace(Password) ||
+            string.IsNullOrWhiteSpace(Mobile))
+        {
+            ErrorMessage = "All fields are required";
+            return;
+        }
+
         if (!Email.Contains("@"))
         {
             ErrorMessage = "Invalid email";
@@ -116,21 +160,27 @@ public class SignUpViewModel : INotifyPropertyChanged
         session.CurrentUserId = newUser.Id;
         session.IsAdmin = false;
 
-        ErrorMessage = "";
+        Preferences.Default.Set("userId", newUser.Id);
+        Preferences.Default.Set("email", newUser.Email);
+        Preferences.Default.Set("userName", newUser.Email);
+        Preferences.Default.Set("isAdmin", false);
+
+        ErrorMessage = string.Empty;
 
         ((AppShell)Shell.Current).SetMenuByUser(newUser.Email);
+
         await Shell.Current.GoToAsync("//MainPage");
-    }
-
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    private void OnPropertyChanged([CallerMemberName] string name = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 
     private async void GoToSignIn()
     {
         await Shell.Current.GoToAsync("//SignInPage");
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    private void OnPropertyChanged([CallerMemberName] string name = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 }

@@ -3,6 +3,8 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using ReCAI.Models;
 
+
+
 namespace ReCAI.ViewModels;
 
 public class GameViewModel : INotifyPropertyChanged
@@ -181,7 +183,8 @@ public class GameViewModel : INotifyPropertyChanged
         }
         else
         {
-            FeedbackMessage = CurrentItem.Explanation;
+            Score--;
+            FeedbackMessage = $"Wrong! {CurrentItem.Explanation}";
         }
 
         return isCorrect;

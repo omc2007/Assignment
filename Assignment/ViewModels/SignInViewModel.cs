@@ -3,9 +3,9 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using ReCAI.Services;
 using ReCAI.Models;
+using Microsoft.Maui.Storage;
+
 namespace ReCAI.ViewModels;
-
-
 
 public class SignInViewModel : INotifyPropertyChanged
 {
@@ -20,25 +20,43 @@ public class SignInViewModel : INotifyPropertyChanged
     public string Email
     {
         get => email;
-        set { email = value; OnPropertyChanged(); OnPropertyChanged(nameof(CanSignIn)); }
+        set
+        {
+            email = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(CanSignIn));
+        }
     }
 
     public string Password
     {
         get => password;
-        set { password = value; OnPropertyChanged(); OnPropertyChanged(nameof(CanSignIn)); }
+        set
+        {
+            password = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(CanSignIn));
+        }
     }
 
     public bool IsPassword
     {
         get => isPassword;
-        set { isPassword = value; OnPropertyChanged(); }
+        set
+        {
+            isPassword = value;
+            OnPropertyChanged();
+        }
     }
 
     public string ErrorMessage
     {
         get => errorMessage;
-        set { errorMessage = value; OnPropertyChanged(); }
+        set
+        {
+            errorMessage = value;
+            OnPropertyChanged();
+        }
     }
 
     public bool CanSignIn =>
@@ -59,11 +77,15 @@ public class SignInViewModel : INotifyPropertyChanged
         GoToSignUpCommand = new Command(GoToSignUp);
     }
 
-    private void TogglePassword() => IsPassword = !IsPassword;
+    private void TogglePassword()
+    {
+        IsPassword = !IsPassword;
+    }
 
     private async void SignIn()
     {
         var user = userService.GetByEmail(Email);
+
         if (user == null || user.Password != Password)
         {
             ErrorMessage = "Invalid email or password";
@@ -73,8 +95,15 @@ public class SignInViewModel : INotifyPropertyChanged
         session.CurrentUserId = user.Id;
         session.IsAdmin = user.Email.Trim().ToLower() == "admin@gmail.com";
 
-        ErrorMessage = "";
+        Preferences.Default.Set("userId", user.Id);
+        Preferences.Default.Set("email", user.Email);
+        Preferences.Default.Set("userName", user.Email);
+        Preferences.Default.Set("isAdmin", session.IsAdmin);
+
+        ErrorMessage = string.Empty;
+
         ((AppShell)Shell.Current).SetMenuByUser(user.Email);
+
         await Shell.Current.GoToAsync("//MainPage");
     }
 
@@ -86,8 +115,7 @@ public class SignInViewModel : INotifyPropertyChanged
     public event PropertyChangedEventHandler? PropertyChanged;
 
     private void OnPropertyChanged([CallerMemberName] string name = null)
-        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+    }
 }
-
-
-

@@ -1,11 +1,21 @@
 using ReCAI.ViewModels;
+using ReCAI.Models;
+using ReCAI.Services;
+using Microsoft.Maui.Storage;
+
+
 
 namespace ReCAI.Views;
 
 public partial class GamePage : ContentPage
 {
     private readonly GameViewModel vm;
+    private readonly GameScoreService gameScoreService = new();
+
     private bool isAnimating;
+    private int correctAnswersCount;
+
+    private const int TotalQuestions = 10;
 
     public GamePage()
     {
@@ -16,6 +26,13 @@ public partial class GamePage : ContentPage
     }
 
     private Image? ProductImageControl => this.FindByName<Image>("ProductImage");
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+
+        await LoadTopScoresAsync();
+    }
 
     private async void OnBinClicked(object sender, EventArgs e)
     {
@@ -39,6 +56,16 @@ public partial class GamePage : ContentPage
             await AnimateCorrectAnswer(selectedButton);
 
             await Task.Delay(350);
+
+            correctAnswersCount++;
+
+            if (correctAnswersCount >= TotalQuestions)
+            {
+                await FinishGameAsync();
+
+                isAnimating = false;
+                return;
+            }
 
             vm.MoveToNextItem();
 
@@ -86,6 +113,60 @@ public partial class GamePage : ContentPage
         await productImage.TranslateTo(0, 0, 50);
     }
 
+    private async Task FinishGameAsync()
+    {
+        string userId = Preferences.Default.Get("userId", string.Empty);
+
+        if (string.IsNullOrWhiteSpace(userId))
+            userId = Preferences.Default.Get("UserId", string.Empty);
+
+        string userEmail = Preferences.Default.Get("email", string.Empty);
+
+        if (string.IsNullOrWhiteSpace(userEmail))
+            userEmail = Preferences.Default.Get("UserEmail", string.Empty);
+
+        string userName = Preferences.Default.Get("userName", string.Empty);
+
+        if (string.IsNullOrWhiteSpace(userName))
+            userName = Preferences.Default.Get("UserName", string.Empty);
+
+        if (string.IsNullOrWhiteSpace(userName))
+            userName = userEmail;
+
+        if (string.IsNullOrWhiteSpace(userId))
+            userId = userEmail;
+
+        var score = new GameScore
+        {
+            UserId = userId,
+            UserEmail = userEmail,
+            UserName = userName,
+            LastScore = vm.Score,
+            TotalQuestions = TotalQuestions,
+            UpdatedAt = DateTime.Now
+        };
+
+        await gameScoreService.SaveScoreAsync(score);
+
+        await DisplayAlert("Game Finished", $"Your score is: {vm.Score}", "OK");
+
+        await LoadTopScoresAsync();
+
+        RestartGame();
+    }
+
+    private async Task LoadTopScoresAsync()
+    {
+        var topScores = await gameScoreService.GetTop3RanksAsync();
+
+        CollectionView? topScoresView = this.FindByName<CollectionView>("TopScoresCollectionView");
+
+        if (topScoresView == null)
+            return;
+
+        topScoresView.ItemsSource = topScores;
+    }
+
     private void ResetProductImage()
     {
         Image? productImage = ProductImageControl;
@@ -100,9 +181,17 @@ public partial class GamePage : ContentPage
         productImage.Rotation = 0;
     }
 
+    private void RestartGame()
+    {
+        correctAnswersCount = 0;
+
+        vm.RestartGame();
+
+        ResetProductImage();
+    }
+
     private void OnRestartClicked(object sender, EventArgs e)
     {
-        vm.RestartGame();
-        ResetProductImage();
+        RestartGame();
     }
 }

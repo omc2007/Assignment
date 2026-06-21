@@ -4,6 +4,7 @@ using System.Windows.Input;
 using ReCAI.Models;
 using ReCAI.Services;
 using ReCAI.Views;
+using Microsoft.Maui.Storage;
 
 namespace ReCAI.ViewModels;
 
@@ -13,6 +14,7 @@ public class AccountViewModel : INotifyPropertyChanged
 
     private readonly IUserService userService;
     private readonly ISessionService session;
+    private readonly GameScoreService gameScoreService = new();
 
     private string userId = "";
     private string firstName = "";
@@ -26,7 +28,11 @@ public class AccountViewModel : INotifyPropertyChanged
     public string UserId
     {
         get => userId;
-        set { userId = value; OnPropertyChanged(); }
+        set
+        {
+            userId = value;
+            OnPropertyChanged();
+        }
     }
 
     public string FirstName
@@ -79,13 +85,21 @@ public class AccountViewModel : INotifyPropertyChanged
     public ImageSource ProfileImage
     {
         get => profileImage;
-        set { profileImage = value; OnPropertyChanged(); }
+        set
+        {
+            profileImage = value;
+            OnPropertyChanged();
+        }
     }
 
     public string ErrorMessage
     {
         get => errorMessage;
-        set { errorMessage = value; OnPropertyChanged(); }
+        set
+        {
+            errorMessage = value;
+            OnPropertyChanged();
+        }
     }
 
     public bool IsAdminAccount =>
@@ -118,6 +132,7 @@ public class AccountViewModel : INotifyPropertyChanged
     public void Load(string id)
     {
         var user = userService.GetById(id);
+
         if (user == null)
         {
             ErrorMessage = "User not found";
@@ -131,7 +146,7 @@ public class AccountViewModel : INotifyPropertyChanged
         originalEmail = user.Email;
         Mobile = user.Mobile;
 
-        ErrorMessage = "";
+        ErrorMessage = string.Empty;
 
         OnPropertyChanged(nameof(IsAdminAccount));
         OnPropertyChanged(nameof(CanEditEmail));
@@ -146,23 +161,62 @@ public class AccountViewModel : INotifyPropertyChanged
             Email = AdminEmail;
         }
 
+        if (string.IsNullOrWhiteSpace(FirstName) ||
+            string.IsNullOrWhiteSpace(LastName) ||
+            string.IsNullOrWhiteSpace(Email) ||
+            string.IsNullOrWhiteSpace(Mobile))
+        {
+            ErrorMessage = "All fields are required";
+            return;
+        }
+
         if (!Email.Contains("@"))
         {
             ErrorMessage = "Invalid email";
             return;
         }
 
-        userService.Update(new AppUser
+        var existingUser = userService.GetById(UserId);
+
+        if (existingUser == null)
         {
-            Id = UserId,
+            ErrorMessage = "User not found";
+            return;
+        }
+
+        var updatedUser = new AppUser
+        {
+            Id = existingUser.Id,
             FirstName = FirstName,
             LastName = LastName,
             Email = Email,
-            Mobile = Mobile
-        });
+            Mobile = Mobile,
+            Password = existingUser.Password,
+            IsAdmin = existingUser.IsAdmin,
+            CreatedAt = existingUser.CreatedAt
+        };
+
+        userService.Update(updatedUser);
+
+        string displayName = $"{FirstName} {LastName}".Trim();
+
+        if (string.IsNullOrWhiteSpace(displayName))
+            displayName = Email;
+
+        await gameScoreService.UpdateUserDetailsAsync(UserId, Email, displayName);
+
+        if (session.CurrentUserId == UserId)
+        {
+            Preferences.Default.Set("userId", UserId);
+            Preferences.Default.Set("email", Email);
+            Preferences.Default.Set("userName", displayName);
+            Preferences.Default.Set("isAdmin", existingUser.IsAdmin);
+
+            ((AppShell)Shell.Current).SetMenuByUser(Email);
+        }
 
         originalEmail = Email;
-        ErrorMessage = "";
+        ErrorMessage = string.Empty;
 
         OnPropertyChanged(nameof(IsAdminAccount));
         OnPropertyChanged(nameof(CanEditEmail));
@@ -180,6 +234,8 @@ public class AccountViewModel : INotifyPropertyChanged
             return;
 
         userService.Delete(UserId);
+
+        await gameScoreService.DeleteScoreByUserIdAsync(UserId);
 
         await Shell.Current.GoToAsync(nameof(UsersListPage));
     }
